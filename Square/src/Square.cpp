@@ -1,4 +1,3 @@
-
 #include <string>
 #include <vector>
 #include <stdio.h>
@@ -35,7 +34,7 @@ int main(int argc, char *argv[]) {
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Cube", NULL, NULL);
+	window = glfwCreateWindow(640, 480, "Hello World Triangle", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
 		return -1;
@@ -59,14 +58,10 @@ int main(int argc, char *argv[]) {
 	//glDepthFunc (GL_LESS); // depth-testing interprets a smaller value as "closer" 
 
 	glViewport(0, 0, (GLsizei)640, (GLsizei)480);
-	glEnable(GL_DEPTH_TEST); // Habilita el z-buffer
 
 	while (!glfwWindowShouldClose(window)) {
 		/* update other events like input handling */
 		glfwPollEvents();
-
-		// Update de Application
-		app.update();
 
 		/* put the stuff we've been drawing onto the display */
 		app.display();
@@ -77,5 +72,4 @@ int main(int argc, char *argv[]) {
 	/* close GL context and any other GLFW resources */
 	glfwTerminate();
 	return 0;
-
 }

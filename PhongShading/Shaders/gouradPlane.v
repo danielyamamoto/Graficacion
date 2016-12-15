@@ -8,7 +8,7 @@ uniform vec3 myLightPosition;
 
 //Derivada parcial de "a"
 float Dp(float a, float b)  {
-	return	-4.0 * a * 0.04 * sin(0.02 * (a*a + b*b) + fTime);
+	// return -4.0 * a * 0.04 * sin(0.02 * (a*a + b*b) + fTime);
 }
 
 float F(float x, float z) {
