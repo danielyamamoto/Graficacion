@@ -25,6 +25,7 @@ private:
 	std::string strVertexShader, strFragmentShader;
 
 	Plane plane;
+	float time;
 	glm::mat4 rotation;
 	glm::mat4 rotationX;
 	glm::mat4 rotationY;

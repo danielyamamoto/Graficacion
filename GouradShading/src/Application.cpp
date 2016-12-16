@@ -70,8 +70,8 @@ void Application::display() {
 	//Borramos el buffer de color
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glPolygonMode(GL_BACK, GL_LINE);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glUseProgram(plane.shader);
 	glBindVertexArray(plane.vao);
 

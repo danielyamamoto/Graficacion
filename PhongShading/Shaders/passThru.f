@@ -1,11 +1,11 @@
-#version 430 
-
-out vec4 color; // Salida
+#version 430 core
 
 uniform vec3 vEye;
-uniform vec3 lightv;
-uniform vec3 newNormal;
-uniform vec3 vNewVec;
+
+in vec3 newNormal;
+in vec3 lightv;
+in vec4 vNewVec;
+out vec4 color; // Salida
 
 vec3 getAmbient(in vec3 light, in vec3 mat) {
 	return light * mat;
@@ -36,6 +36,5 @@ void main() {
 	const vec3 mS = vec3( 1.0, 1.0, 1.0 );
 
 	const float fShininess = 10.0;
-
 	color = clamp(vec4(getAmbient(lA, mA), 1.0) + vec4(getDifusse(lD, mD, lightv, newNormal), 1.0) + vec4(getSpecular(lS, mS, lightv, newNormal, fShininess, vNewVec.xyz), 1.0), 0.0, 1.0);
 }

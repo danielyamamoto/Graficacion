@@ -1,11 +1,9 @@
 #include "Application.h"
 #include <iostream>
 #include <vector>
-
 #include "GL\glew.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
-
 #include "glm\matrix.hpp"
 #include "glm\gtc\type_ptr.hpp"
 #include "glm\gtc\matrix_transform.hpp"
@@ -34,7 +32,7 @@ void Application::setup() {
 	plane.fAngleY = 0.0;
 	plane.fAngleZ = 0.0;
 
-	plane.createPlane(50);
+	plane.createPlane(40);
 
 	loadShaders();
 	InitializeProgram(plane.shader, sVertex, sFragment);
@@ -42,7 +40,6 @@ void Application::setup() {
 	plane.uTransform[0] = glGetUniformLocation(plane.shader, "mTransform");
 	plane.uTime[0] = glGetUniformLocation(plane.shader, "fTime");
 	plane.uEye[0] = glGetUniformLocation(plane.shader, "vEye");
-	uMyLightPosition[0] = glGetUniformLocation(plane.shader, "myLightPosition");
 
 	glGenVertexArrays(1, &plane.vao);
 	glBindVertexArray(plane.vao);
@@ -64,10 +61,8 @@ void Application::setup() {
 }
 
 void Application::update() {
-	//plane.fAngleY = plane.fAngleY + 0.01f;
-	plane.time = plane.time + 0.03f;
-	plane.myLight = plane.myLight + 1.0f;
-	//plane.eye = plane.eye + 0.5f;
+	plane.fAngleY = plane.fAngleY + 0.1f;
+	time = time + 0.05f;
 }
 
 void Application::display() {
@@ -88,37 +83,14 @@ void Application::display() {
 	pers = glm::perspective(45.0f, (640.0f / 480.0f), 0.1f, 180.0f);
 	rotation = pers * cam * rotation;
 
+	glUniform3fv(plane.uEye[0], 1, glm::value_ptr(eye));
+	glUniform1f(plane.uTime[0], time);
 	glUniformMatrix4fv(plane.uTransform[0], 1, GL_FALSE, glm::value_ptr(rotation));
-	glUniform1f(plane.uTime[0], plane.time);
-	glUniform1f(plane.uEye[0], plane.eye);
-	glUniform1f(uMyLightPosition[0], plane.myLight);
 	
 	glDrawArrays(GL_TRIANGLES, 0, plane.getNumVertex());
+
 }
 
 void Application::reshape(int w, int h) {
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
 }
-
-
-
-//const vec3 lA = vec3(1.0, 0.0, 1.0); // Rojo
-//const vec3 lD = vec3(0.1, 0.1, 0.1);
-//const vec3 lS = vec3(0.1, 0.1, 0.1);
-//const vec3 mA = vec3(1.0, 0.0, 1.0); // Azul
-//const vec3 mD = vec3(0.1, 0.1, 0.1);
-//const vec3 mS = vec3(0.1, 0.1, 0.1);
-//
-//const float fShininess = 10.0;
-
-
-//color = clamp(
-//	vec4(getAmbient(lA, mA), 1.0)
-//	+ vec4(getDifusse(lD, mD, lightv, newNormal), 1.0)
-//	+ vec4(getSpecular(lS, mS, lightv, newNormal, fShininess, vNewVec.xyz), 1.0)
-//	, 0.0, 1.0);
-
-//return 4 * sin((x * x + z * z) * 0.01 - fTime)
-//+ (sin(1 * (x * x + z * z)) / 1)
-//+ (sin(2 * (x * x + z * z)) / 2)
-//+ (sin(3 * (x * x + z * z)) / 3);
